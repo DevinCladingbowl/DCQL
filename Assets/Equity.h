@@ -4,11 +4,11 @@
 class Equity : Asset
 {
 public:
-	std::string GetAssetType() { return "Equity"; }
-	std::string GetEquityName() { return equityName; }
+	std::string GetAssetType() override { return "Equity"; }
+	std::string GetEquityName() { return m_equityName; }
 
 
 private:
-	std::string equityName;
+	std::string m_equityName;
 
 };
