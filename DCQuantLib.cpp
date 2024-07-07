@@ -8,6 +8,8 @@
 #include "DCQuantLib.h"
 #include "MarketData/EqOption.cpp"
 #include "Math/Interpolators/LinearInterpolator.h"
+#include "DerivedMarketData/DiscountCurve.h"
+#include "Tools/Tools.h"
 
 
 
@@ -29,6 +31,17 @@ int main()
 
 	y = LinearInterpolator::Interpolate(y1, y2, f);
 	std::cout << y << std::endl;
+
+	std::vector<double> mats = { 1.0,2.0,3.0,4.0,5.0 };
+	std::pair<int, int> interp = Tools::SurroundingIndices(mats, 1.59);
+
+	std::cout << interp.first << " " << interp.second << std::endl;
+
+	DiscountCurve dc = DiscountCurve({ 1,30,90,180,365, 730, 1000 }, { 1,2,3,4,5,6,7 }, true);
+
+	double rate = dc.GetZeroRate(100.0);
+
+	std::cout << rate << std::endl;
 
 	return 0;
 	}
