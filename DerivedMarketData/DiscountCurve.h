@@ -25,6 +25,7 @@ namespace DCQL
 		std::vector<double> m_discountFactors;
 		std::vector<double> m_zeroRates;
 
+
 	};
 }
 

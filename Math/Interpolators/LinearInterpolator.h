@@ -7,8 +7,8 @@ namespace DCQL
 	class LinearInterpolator
 	{
 	public:
-		//Interpolate to y(x) between x1 and x2
-		static double Interpolate(double x, double x1, double x2, double y1, double y2)
+		//Interpolate  y(x) between x1 and x2
+		static double Interpolate(const double& x, const double& x1, const double& x2, const double& y1, const double& y2)
 		{
 			if (x1 == x2) { return y1; }
 
@@ -16,7 +16,7 @@ namespace DCQL
 		}
 
 		//Superior precision version given the fraction (x-x1)/(x2-x1)
-		static double Interpolate(double y1, double y2, double f)
+		static double Interpolate(const double& y1, const double& y2, const double& f)
 		{
 			if (y1 == y2) { return y1; }
 
