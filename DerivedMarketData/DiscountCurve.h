@@ -1,8 +1,5 @@
 #include <vector>
 
-// discount curve class
-// we use piece constant on the log scale(?)
-
 #ifndef DISCOUNTCURVE_H
 #define DISCOUNTCURVE_H
 

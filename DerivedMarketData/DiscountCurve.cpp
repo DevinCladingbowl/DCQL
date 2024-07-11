@@ -14,7 +14,7 @@ namespace DCQL
 
 	double DiscountCurve::GetDiscountFactor(double maturity) // maturity in days
 	{
-		return std::exp(-maturity * GetZeroRate(maturity) / 365.0);
+		return std::exp(-maturity * GetZeroRate(maturity) / 365.0); // TO DO: linear interp of log of df - gives piecewise constant fwds.
 	}
 
 	double DiscountCurve::GetZeroRate(double maturity)
