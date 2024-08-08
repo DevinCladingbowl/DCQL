@@ -6,12 +6,11 @@
 
 
 #include "DCQuantLib.h"
-#include "MarketData/EqOption.cpp"
+#include "MarketData/EqOption.h"
+#include "Assets/Equity.h"
 #include "Math/Interpolators/LinearInterpolator.h"
 #include "DerivedMarketData/DiscountCurve.h"
 #include "Tools/Tools.h"
-
-
 
 
 
@@ -42,6 +41,11 @@ int main()
 	double rate = dc.GetZeroRate(100.0);
 
 	std::cout << rate << std::endl;
+
+	EqOption option = DCQL::EqOption("equity1", EqOption::ClaimType::Call, 100, 110, 0.2, true);
+	//std::cout << option.GetPrice();
+
+	
 
 	return 0;
 	}

@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 #ifndef DISCOUNTCURVE_H
 #define DISCOUNTCURVE_H
@@ -17,10 +18,13 @@ namespace DCQL
 
 		double GetZeroRate(double maturity);
 
+		std::string GetLabel() { return m_assetLabel; }
+
 	private:
 		std::vector<double> m_maturities;
 		std::vector<double> m_discountFactors;
 		std::vector<double> m_zeroRates;
+		std::string m_assetLabel;
 
 
 	};
