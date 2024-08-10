@@ -7,6 +7,11 @@
 namespace DCQL
 {
 
+	DiscountCurve::DiscountCurve(std::vector<double> maturities, std::vector<double> discountFactors) : m_maturities(maturities), m_discountFactors(discountFactors)
+	{
+		;
+	}
+
 	DiscountCurve::DiscountCurve(std::vector<double> maturities, std::vector<double> zeroRates, bool usingZeroRates) : m_maturities(maturities), m_zeroRates(zeroRates)
 	{
 		;

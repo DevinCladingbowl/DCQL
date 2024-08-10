@@ -19,13 +19,14 @@ namespace DCQL
 			Put = 1
 		};
 		
-		std::string GetMarketDataType() override { return "EqOption"; }
-
+		
 		// using option price
-		EqOption(std::string equityName, ClaimType claimType, double spot, double strike, double price);
+		EqOption(std::string equityName, ClaimType claimType, double spot, double strike, double maturity, double price);
 
 		// using implied vol of option
-		EqOption(std::string equityName, ClaimType claimType, double spot, double strike, double impliedVol, bool usingImpliedVol);
+		EqOption(std::string equityName, ClaimType claimType, double spot, double strike, double maturity, double impliedVol, bool usingImpliedVol);
+
+		std::string GetMarketDataType() override { return "EqOption"; }
 
 		std::string GetEquityName() { return m_equityName; }
 		ClaimType GetClaimType() { return m_claimType; }
