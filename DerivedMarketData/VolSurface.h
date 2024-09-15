@@ -24,11 +24,16 @@ namespace DCQL
 			// TO DO
 		};
 		
-		VolSurface(std::string assetName, OptionChain optionChain);
+//		VolSurface() { ; }
+		VolSurface(std::string assetName, OptionChain optionChain) : m_assetName(assetName), m_optionChain(optionChain)
+		{
+			;
+		}
 
 		void GenerateGrid(int maxMaturity, double maxStrike, double strikeStep, bool fillWithKnown = true);
 		void FitVolSurface(std::string fittingMethod); //Function to take the option chain data and fit a vol surface using a given fitting type.
 
+		std::vector<std::vector<double>> GetImpliedVolSurface() { return m_impliedVolSurface; }
 
 		
 
@@ -40,9 +45,9 @@ namespace DCQL
 
 			std::vector<EqOption> options = m_optionChain.GetOptions();
 
-			std::vector<std::vector<double>> expiryVolStrike(options.size(), std::vector<double>(3))
+			std::vector<std::vector<double>> expiryVolStrike;//(options.size(), std::vector<double>(3));
 
-			for each(EqOption option options)
+			for (EqOption option : options)
 			{
 				double K = option.GetStrike();
 				double T = option.GetMaturity();
@@ -53,8 +58,13 @@ namespace DCQL
 			}
 
 			return expiryVolStrike;
-			
 		}
+
+		//void FillGrid(std::vector<std::vector<double>>& optionChainData);
+		//void FillGrid() { FillGrid(DecomposeOptionChain(); }
+
+		double StrikeIndexToValue(int index, double strikeStep) { return strikeStep * index; }
+		int StrikeValueToIndex(double K, double strikeStep) { return std::floor(K / strikeStep); }
 
 	private:
 		std::string m_assetName;

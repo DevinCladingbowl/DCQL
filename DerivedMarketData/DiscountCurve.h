@@ -18,6 +18,7 @@ namespace DCQL
 
 		double GetZeroRate(double maturity);
 
+		void SetLabel(std::string label) { m_assetLabel = label; }
 		std::string GetLabel() { return m_assetLabel; }
 
 	private:

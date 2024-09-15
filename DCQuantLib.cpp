@@ -7,9 +7,11 @@
 
 #include "DCQuantLib.h"
 #include "MarketData/EqOption.cpp"
+#include "MarketData/OptionChain.h"
 #include "Assets/Equity.h"
 #include "Math/Interpolators/LinearInterpolator.h"
 #include "DerivedMarketData/DiscountCurve.h"
+#include "DerivedMarketData/VolSurface.cpp"
 #include "Tools/Tools.h"
 
 
@@ -42,10 +44,30 @@ int main()
 
 	std::cout << rate << std::endl;
 
-	EqOption option = DCQL::EqOption("equity1", EqOption::ClaimType::Call, 100, 110, 730, 0.2, true);
+	EqOption option = DCQL::EqOption("equity1", EqOption::ClaimType::Call, 10, 11, 14, 0.24, true);
+	dc.SetLabel("equity1");
 	option.SetPrice(dc);
-	std::cout << option.GetPrice();
+	std::cout << option.GetPrice() << std::endl;
 
+	std::vector<EqOption> optionList = { option };
+
+	OptionChain chain("equity1", optionList);
+
+	VolSurface volSurface("equity1", chain);
+
+	volSurface.GenerateGrid(15, 15, 0.1);
+
+	auto grid = volSurface.GetImpliedVolSurface();
+
+	for (int i = 0; i < grid.size(); i++)
+	{
+		for (int j = 0; j < grid[i].size(); j++)
+		{
+			std::cout << grid[i][j] << " ";
+		}
+
+		std::cout << std::endl;
+	}
 	
 
 	return 0;

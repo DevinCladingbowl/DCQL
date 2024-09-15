@@ -29,7 +29,7 @@ namespace DCQL
 			return;
 		}
 
-		double rate = discountCurve.GetDiscountFactor(m_maturity);
+		double rate = discountCurve.GetZeroRate(m_maturity);
 
 		m_price = Pricers::BSPricer(m_spot, m_strike, m_maturity, rate, m_impliedVol);
 

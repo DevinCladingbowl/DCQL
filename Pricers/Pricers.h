@@ -14,10 +14,11 @@ namespace DCQL
 		static double BSPricer(double spot, double strike, double maturity, double rate, double vol) //make it return forward instead - more accurate(?)
 		{
 			maturity /= 365.0;
+			rate /= 100;
 			double d1 = std::log(spot / strike) + (rate + vol * vol / 2) * maturity;
 			d1 /= vol * std::sqrt(maturity);
 			
-			double d2 = d1 - vol * maturity;
+			double d2 = d1 - vol * std::sqrt(maturity);
 
 			double N1 = Distribitions::StandardNormalCDF(d1);
 			double N2 = Distribitions::StandardNormalCDF(d2);

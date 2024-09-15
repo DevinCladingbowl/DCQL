@@ -3,10 +3,10 @@
 namespace DCQL
 {
 
-	void VolSurface::GenerateGrid(int maxMaturity, double maxStrike, double strikeStep, bool fillWithKnown = true)
+	void VolSurface::GenerateGrid(int maxMaturity, double maxStrike, double strikeStep, bool fillWithKnown)
 	{
 		int T = 0;
-		int K = 0;
+		double K = 0;
 		while (T < maxMaturity)
 		{
 			m_expiries.push_back(T);
@@ -16,7 +16,7 @@ namespace DCQL
 		while (K < maxStrike) // Has to be a better way of doing this.
 		{
 			m_strikes.push_back(K);
-			K += strike_step;
+			K += strikeStep;
 		}
 
 
@@ -35,12 +35,18 @@ namespace DCQL
 
 		std::vector<std::vector<double>> optionChainData = DecomposeOptionChain(); // (K,T,vol)
 
+		for (std::vector<double> vec : optionChainData)
+		{
+			double K = vec[0];
+			double T = vec[1];
+			double vol = vec[2];
+
+			volSurfaceGrid[StrikeValueToIndex(K, strikeStep)][T] = vol;
+		}
+
+		m_impliedVolSurface = volSurfaceGrid;
 
 	}
 
-	void VolSurface::FillGrid(std::vector<std::vector<double>>& optionChainData)
-	{
-
-	}
 	
 }
