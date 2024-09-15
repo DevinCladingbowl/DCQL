@@ -26,39 +26,33 @@ namespace DCQL
 		
 		VolSurface(std::string assetName, OptionChain optionChain);
 
+		void GenerateGrid(int maxMaturity, double maxStrike, double strikeStep, bool fillWithKnown = true);
 		void FitVolSurface(std::string fittingMethod); //Function to take the option chain data and fit a vol surface using a given fitting type.
 
-		void GenerateGrid(int maxMaturity, double maxStrike, double strikeStep)
-		{
-			int T = 0;
-			int K = 0;
-			while (T < maxMaturity)
-			{
-				m_expiries.push_back(T);
-				T++;
-			}
 
-			while (K < maxStrike) // Has to be a better way of doing this.
-			{
-				m_strikes.push_back(K);
-				K += strike_step;
-			}
-
-			int dim1 = m_strikes.size();
-			int dim2 = m_expiries.size();
-		}
+		
 
 	
 	protected:
 
-		void DecomposeOptionGrid()
+		std::vector<std::vector<double>> DecomposeOptionChain() //returns array with each element as (K, T,vol)
 		{
-			for each(EqOption option in m_optionChain.GetOptions())
+
+			std::vector<EqOption> options = m_optionChain.GetOptions();
+
+			std::vector<std::vector<double>> expiryVolStrike(options.size(), std::vector<double>(3))
+
+			for each(EqOption option options)
 			{
 				double K = option.GetStrike();
 				double T = option.GetMaturity();
 				double vol = option.GetImpliedVol();
+				std::vector<double> optionData = { K, T, vol };
+
+				expiryVolStrike.push_back(optionData);
 			}
+
+			return expiryVolStrike;
 			
 		}
 
@@ -66,8 +60,11 @@ namespace DCQL
 		std::string m_assetName;
 		OptionChain m_optionChain;
 		std::vector<double> m_strikes;
+		int m_numberOfStrikes;
 		std::vector<double> m_expiries;
-		std::array<double, 2> impliedVolSurface;
+		std::vector<std::vector<double>> m_impliedVolSurface; // indexed like surface[K][T]
+		
+		
 
 	};
 }
